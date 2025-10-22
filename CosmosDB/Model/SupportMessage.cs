@@ -1,17 +1,20 @@
 ﻿// Models/SupportMessage.cs
 using System;
-using System.Text.Json.Serialization;
+using Newtonsoft.Json; // <— VIGTIGT: brug Newtonsoft
 
 namespace Model
 {
     public class SupportMessage
     {
-        [JsonPropertyName("id")] public string Id { get; set; }
-        [JsonPropertyName("navn")] public string Navn { get; set; }
-        [JsonPropertyName("email")] public string Email { get; set; }
-        [JsonPropertyName("telefon")] public string Telefon { get; set; }
-        [JsonPropertyName("beskrivelse")] public string Beskrivelse { get; set; }
-        [JsonPropertyName("kategori")] public string Kategori { get; set; }
-        [JsonPropertyName("dato_tidspunkt")] public DateTime DatoTidspunkt { get; set; }
+        [JsonProperty("id")] public string Id { get; set; }
+        [JsonProperty("navn")] public string Navn { get; set; }
+        [JsonProperty("email")] public string Email { get; set; }
+        [JsonProperty("telefon")] public string Telefon { get; set; }
+        [JsonProperty("beskrivelse")] public string Beskrivelse { get; set; }
+
+        // VIGTIGT: Containerens PK er /category
+        [JsonProperty("category")] public string Kategori { get; set; }
+
+        [JsonProperty("dato_tidspunkt")] public DateTime DatoTidspunkt { get; set; }
     }
 }

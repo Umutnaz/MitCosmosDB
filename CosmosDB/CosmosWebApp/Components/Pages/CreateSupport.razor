@@ -1,84 +1,122 @@
 ﻿@page "/createsupport"
+@using Microsoft.Azure.Cosmos
 @using Model
 @inject CosmosWebApp.Service.SupportService SupportService
 @inject NavigationManager Nav
+@rendermode InteractiveServer
 
 <PageTitle>Opret henvendelse</PageTitle>
 
-<div id="create-support-page" class="cs-card">
-    <h3 class="cs-title">Opret supporthenvendelse</h3>
-
-    <EditForm Model="_vm" OnValidSubmit="HandleSubmit" class="cs-form">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
-
-        <div class="cs-row">
-            <label for="navn">Navn</label>
-            <InputText id="navn" class="cs-input" @bind-Value="_vm.Navn" />
-            <ValidationMessage For="@(()=>_vm.Navn)" class="cs-error" />
-        </div>
-
-        <div class="cs-row">
-            <label for="email">Email</label>
-            <InputText id="email" class="cs-input" @bind-Value="_vm.Email" />
-            <ValidationMessage For="@(()=>_vm.Email)" class="cs-error" />
-        </div>
-
-        <div class="cs-row">
-            <label for="telefon">Telefon</label>
-            <InputText id="telefon" class="cs-input" @bind-Value="_vm.Telefon" />
-            <ValidationMessage For="@(()=>_vm.Telefon)" class="cs-error" />
-        </div>
-
-        <div class="cs-row">
-            <label for="kategori">Kategori</label>
-            <InputSelect id="kategori" class="cs-input" @bind-Value="_vm.Kategori">
-                <option value="">-- vælg --</option>
-                @foreach (var k in _kategorier) { <option value="@k">@k</option> }
-            </InputSelect>
-            <ValidationMessage For="@(()=>_vm.Kategori)" class="cs-error" />
-        </div>
-
-        <div class="cs-row">
-            <label for="beskrivelse">Beskrivelse</label>
-            <InputTextArea id="beskrivelse" class="cs-textarea" @bind-Value="_vm.Beskrivelse" />
-            <ValidationMessage For="@(()=>_vm.Beskrivelse)" class="cs-error" />
-        </div>
-
-        <div class="cs-actions">
-            <button type="submit" class="cs-button">Opret</button>
-            <a href="/supportlist" class="cs-link">Til oversigt</a>
-        </div>
-    </EditForm>
-</div>
-
-@code {
-    private readonly string[] _kategorier = { "Teknisk", "Fakturering", "Konto", "Andet" };
-    private CreateSupportVm _vm = new();
-
-    private async Task HandleSubmit()
+@if (loaded)
+{
+    if (!string.IsNullOrEmpty(errorText))
     {
-        var m = new SupportMessage
-        {
-            Id = Guid.NewGuid().ToString(),
-            Navn = _vm.Navn,
-            Email = _vm.Email,
-            Telefon = _vm.Telefon,
-            Beskrivelse = _vm.Beskrivelse,
-            Kategori = _vm.Kategori,
-            DatoTidspunkt = DateTime.UtcNow
-        };
-
-        await SupportService.CreateAsync(m);
-        Nav.NavigateTo("/supportlist");
+        <div class="alert alert-danger">
+            @errorText
+        </div>
     }
 
-    public class CreateSupportVm
+    <div id="create-support-page" class="cs-card">
+        <h3 class="cs-title">Opret supporthenvendelse</h3>
+
+        <EditForm class="cs-form"
+                  EditContext="EditContext"
+                  OnSubmit="HandleSubmit"
+                  FormName="CreateSupportForm">
+            <AntiforgeryToken />
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+
+            <div class="cs-row">
+                <label for="navn">Navn</label>
+                <InputText id="navn" class="cs-input" @bind-Value="_model.Navn" />
+                <ValidationMessage For="() => _model.Navn" class="cs-error" />
+            </div>
+
+            <div class="cs-row">
+                <label for="email">Email</label>
+                <InputText id="email" class="cs-input" @bind-Value="_model.Email" />
+                <ValidationMessage For="() => _model.Email" class="cs-error" />
+            </div>
+
+            <div class="cs-row">
+                <label for="telefon">Telefon</label>
+                <InputText id="telefon" class="cs-input" @bind-Value="_model.Telefon" />
+                <ValidationMessage For="() => _model.Telefon" class="cs-error" />
+            </div>
+
+            <div class="cs-row">
+                <label for="kategori">Kategori</label>
+                <InputSelect id="kategori" class="cs-input" @bind-Value="_model.Kategori" TValue="string">
+                    <option value="">-- vælg --</option>
+                    @foreach (var k in _kategorier)
+                    {
+                        <option value="@k">@k</option>
+                    }
+                </InputSelect>
+                <ValidationMessage For="() => _model.Kategori" class="cs-error" />
+            </div>
+
+            <div class="cs-row">
+                <label for="beskrivelse">Beskrivelse</label>
+                <InputTextArea id="beskrivelse" class="cs-textarea" @bind-Value="_model.Beskrivelse" />
+                <ValidationMessage For="() => _model.Beskrivelse" class="cs-error" />
+            </div>
+
+            <div class="cs-actions">
+                <button type="submit" class="cs-button">Opret henvendelse</button>
+                <a href="/supportlist" class="cs-link">Til oversigt</a>
+            </div>
+        </EditForm>
+    </div>
+}
+
+@code
+{
+    bool loaded = false;
+    string? errorText;
+
+    SupportMessage? _model;
+    EditContext? EditContext;
+
+    string[] _kategorier = new[] { "Teknisk", "Fakturering", "Konto", "Andet" };
+
+    protected override Task OnInitializedAsync()
     {
-        [System.ComponentModel.DataAnnotations.Required] public string Navn { get; set; } = "";
-        [System.ComponentModel.DataAnnotations.Required, System.ComponentModel.DataAnnotations.EmailAddress] public string Email { get; set; } = "";
-        [System.ComponentModel.DataAnnotations.Required] public string Telefon { get; set; } = "";
-        [System.ComponentModel.DataAnnotations.Required, System.ComponentModel.DataAnnotations.MinLength(5)] public string Beskrivelse { get; set; } = "";
-        [System.ComponentModel.DataAnnotations.Required] public string Kategori { get; set; } = "";
+        _model = new SupportMessage();
+        EditContext = new EditContext(_model);
+        loaded = true;
+        return Task.CompletedTask;
+    }
+
+    private async void HandleSubmit()
+    {
+        errorText = null;
+
+        _model!.Id = Guid.NewGuid().ToString();
+        _model.DatoTidspunkt = DateTime.UtcNow;
+
+        if (string.IsNullOrWhiteSpace(_model.Kategori))
+        {
+            errorText = "Vælg en kategori før du opretter (partition key /category må ikke være tom).";
+            StateHasChanged();
+            return;
+        }
+
+        try
+        {
+            await SupportService.CreateAsync(_model);
+            Nav.NavigateTo("/supportlist");
+        }
+        catch (CosmosException ex)
+        {
+            errorText = $"CosmosDB-fejl: {ex.StatusCode} (substatus {ex.SubStatusCode}). {ex.Message}";
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            errorText = $"Uventet fejl: {ex.Message}";
+            StateHasChanged();
+        }
     }
 }
