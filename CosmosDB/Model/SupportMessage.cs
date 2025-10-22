@@ -1,15 +1,17 @@
-﻿namespace Model;
-using Newtonsoft.Json;
+﻿// Models/SupportMessage.cs
 using System;
+using System.Text.Json.Serialization;
 
-public class SupportMessage
+namespace Model
 {
-    [JsonProperty("id")]
-    public string Id { get; set; }
-    public string Navn { get; set; }
-    public string Email { get; set; }
-    public string Telefon { get; set; }
-    public string Beskrivelse { get; set; }
-    public string Kategori { get; set; }
-    public DateTime DatoTidspunkt { get; set; }
+    public class SupportMessage
+    {
+        [JsonPropertyName("id")] public string Id { get; set; }
+        [JsonPropertyName("navn")] public string Navn { get; set; }
+        [JsonPropertyName("email")] public string Email { get; set; }
+        [JsonPropertyName("telefon")] public string Telefon { get; set; }
+        [JsonPropertyName("beskrivelse")] public string Beskrivelse { get; set; }
+        [JsonPropertyName("kategori")] public string Kategori { get; set; }
+        [JsonPropertyName("dato_tidspunkt")] public DateTime DatoTidspunkt { get; set; }
+    }
 }
