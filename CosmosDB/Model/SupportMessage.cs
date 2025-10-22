@@ -1,6 +1,6 @@
-﻿// Models/SupportMessage.cs
+﻿
 using System;
-using Newtonsoft.Json; // <— VIGTIGT: brug Newtonsoft
+using Newtonsoft.Json; 
 
 namespace Model
 {
