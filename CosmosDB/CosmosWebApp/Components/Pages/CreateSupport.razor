@@ -1,0 +1,93 @@
+﻿@page "/createsupport"
+@using Model
+@inject CosmosWebApp.Service.SupportService SupportService
+@inject NavigationManager Nav
+
+<PageTitle>Opret henvendelse</PageTitle>
+
+<div id="create-support-page">
+    <h3 class="cs-title">Opret supporthenvendelse</h3>
+
+    <EditForm Model="_model" OnValidSubmit="HandleValidSubmit" class="cs-form">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div class="cs-form-row">
+            <label for="navn">Navn</label>
+            <InputText id="navn" @bind-Value="_model.Navn" class="cs-input" />
+            <ValidationMessage For="@(() => _model.Navn)" class="cs-error" />
+        </div>
+
+        <div class="cs-form-row">
+            <label for="email">Email</label>
+            <InputText id="email" @bind-Value="_model.Email" class="cs-input" />
+            <ValidationMessage For="@(() => _model.Email)" class="cs-error" />
+        </div>
+
+        <div class="cs-form-row">
+            <label for="telefon">Telefon</label>
+            <InputText id="telefon" @bind-Value="_model.Telefon" class="cs-input" />
+            <ValidationMessage For="@(() => _model.Telefon)" class="cs-error" />
+        </div>
+
+        <div class="cs-form-row">
+            <label for="kategori">Kategori</label>
+            <InputSelect id="kategori" @bind-Value="_model.Kategori" class="cs-input">
+                <option value="">-- vælg --</option>
+                @foreach (var k in _kategorier)
+                {
+                    <option value="@k">@k</option>
+                }
+            </InputSelect>
+            <ValidationMessage For="@(() => _model.Kategori)" class="cs-error" />
+        </div>
+
+        <div class="cs-form-row">
+            <label for="beskrivelse">Beskrivelse</label>
+            <InputTextArea id="beskrivelse" @bind-Value="_model.Beskrivelse" class="cs-textarea" />
+            <ValidationMessage For="@(() => _model.Beskrivelse)" class="cs-error" />
+        </div>
+
+        <button type="submit" class="cs-button">Opret henvendelse</button>
+    </EditForm>
+</div>
+
+@code {
+    private CreateSupportModel _model = new();
+    private readonly string[] _kategorier = { "Teknisk", "Fakturering", "Konto", "Andet" };
+
+    private async Task HandleValidSubmit()
+    {
+        var msg = new SupportMessage
+        {
+            Id = Guid.NewGuid().ToString(),
+            Navn = _model.Navn,
+            Email = _model.Email,
+            Telefon = _model.Telefon,
+            Beskrivelse = _model.Beskrivelse,
+            Kategori = _model.Kategori,
+            DatoTidspunkt = DateTime.UtcNow
+        };
+
+        await SupportService.CreateAsync(msg);
+        Nav.NavigateTo("/supportlist");
+    }
+
+    public class CreateSupportModel
+    {
+        [System.ComponentModel.DataAnnotations.Required(ErrorMessage = "Navn er påkrævet")]
+        public string Navn { get; set; } = "";
+
+        [System.ComponentModel.DataAnnotations.Required, System.ComponentModel.DataAnnotations.EmailAddress]
+        public string Email { get; set; } = "";
+
+        [System.ComponentModel.DataAnnotations.Required, System.ComponentModel.DataAnnotations.Phone]
+        public string Telefon { get; set; } = "";
+
+        [System.ComponentModel.DataAnnotations.Required, System.ComponentModel.DataAnnotations.MinLength(5)]
+        public string Beskrivelse { get; set; } = "";
+
+        [System.ComponentModel.DataAnnotations.Required]
+        public string Kategori { get; set; } = "";
+    }
+}

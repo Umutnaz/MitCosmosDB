@@ -1,0 +1,44 @@
+﻿#support-list-page {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 1rem 2rem;
+    background: #fdfdfd;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,0.07);
+}
+
+.sl-title {
+    font-size: 1.6rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    color: #222;
+}
+
+.sl-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.sl-table th {
+    background: #1976d2;
+    color: #fff;
+    padding: 0.75rem;
+    text-align: left;
+}
+
+.sl-table td {
+    padding: 0.6rem;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.sl-table tr:nth-child(even) {
+    background: #f5f9ff;
+}
+
+.sl-loading, .sl-empty {
+    text-align: center;
+    font-size: 1rem;
+    color: #666;
+    margin-top: 2rem;
+}

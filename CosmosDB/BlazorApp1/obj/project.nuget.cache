@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "0SGYJplS6N8=",
+  "dgSpecHash": "Dr8vcwDmAjU=",
   "success": true,
-  "projectFilePath": "C:\\Users\\umutn\\RiderProjects\\Solution1\\BlazorApp1\\BlazorApp1.csproj",
+  "projectFilePath": "C:\\Users\\umutn\\RiderProjects\\SoftwareArkitektur\\MitCosmosDB\\CosmosDB\\BlazorApp1\\BlazorApp1.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\umutn\\.nuget\\packages\\microsoft.aspnetcore.authorization\\9.0.2\\microsoft.aspnetcore.authorization.9.0.2.nupkg.sha512",
     "C:\\Users\\umutn\\.nuget\\packages\\microsoft.aspnetcore.components\\9.0.2\\microsoft.aspnetcore.components.9.0.2.nupkg.sha512",
