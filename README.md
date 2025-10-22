@@ -6,13 +6,13 @@ Projektet skulle være lavet med CosmosDB Azure som database.
 
 ---
 
-##🪐Hvordan du opretter en CosmoDB med Az KMDO
-$ export DBACCOUNT="ibas-db-account"-$RANDOM
-$ export RESGRP="IBasSupportRG" # Brug gruppenavnet anvendt i opgave A
-$ az cosmosdb create --name $DBACCOUNT --resource-group $RESGRP --enable-free-tier true
-$ export DATABASE="IBasSupportDB"
-$ az cosmosdb sql database create --account-name $DBACCOUNT \
---resource-group $RESGRP --name $DATABASE
+## 🪐Hvordan du opretter en CosmoDB med Az KMDO
+- $ export DBACCOUNT="ibas-db-account"-$RANDOM
+- $ export RESGRP="IBasSupportRG" # Brug gruppenavnet anvendt i opgave A
+- $ az cosmosdb create --name $DBACCOUNT --resource-group $RESGRP --enable-free-tier true
+- $ export DATABASE="IBasSupportDB"
+- $ az cosmosdb sql database create --account-name $DBACCOUNT \
+- --resource-group $RESGRP --name $DATABASE
 
 ---
 ## 📉Status
