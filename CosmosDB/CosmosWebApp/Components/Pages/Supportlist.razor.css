@@ -1,0 +1,66 @@
+﻿#support-list-page.sl-card {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: #fff;
+    border-radius: 16px;
+    padding: 1.25rem 1.5rem;
+    box-shadow: 0 10px 30px rgba(0,0,0,.06);
+}
+
+.sl-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: .75rem;
+    margin-bottom: 1rem;
+}
+
+.sl-title {
+    font-size: 1.6rem;
+    margin: 0;
+    letter-spacing: .2px;
+}
+
+.sl-link {
+    text-decoration: none;
+    padding: .55rem .9rem;
+    border-radius: 10px;
+    background: #1976d2;
+    color: #fff;
+}
+
+.sl-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: .97rem;
+}
+
+.sl-table th,
+.sl-table td {
+    padding: .65rem .75rem;
+    border-bottom: 1px solid #eef1f6;
+    text-align: left;
+    vertical-align: top;
+}
+
+.sl-table th {
+    background: #f7f9fc;
+    font-weight: 600;
+}
+
+.sl-table tr:hover td { background: #fbfdff; }
+
+.sl-chip {
+    display: inline-block;
+    padding: .2rem .5rem;
+    border-radius: 999px;
+    background: #e8f1ff;
+    color: #0b57d0;
+    font-size: .85rem;
+}
+
+.sl-muted, .sl-empty {
+    text-align: center;
+    color: #666;
+    padding: 2rem 0;
+}

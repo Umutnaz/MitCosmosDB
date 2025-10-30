@@ -1,0 +1,52 @@
+﻿@page "/supportlist"
+@using Model
+@inject CosmosWebApp.Service.SupportService SupportService
+
+<PageTitle>Supportoversigt</PageTitle>
+
+<div id="support-list-page" class="sl-card">
+    <div class="sl-header">
+        <h3 class="sl-title">Supporthenvendelser</h3>
+        <a class="sl-link" href="/createsupport">+ Opret henvendelse</a>
+    </div>
+
+    @if (_items is null)
+    {
+        <p class="sl-muted">Indlæser…</p>
+    }
+    else if (_items.Count == 0)
+    {
+        <p class="sl-empty">Ingen henvendelser fundet.</p>
+    }
+    else
+    {
+        <table class="sl-table">
+            <thead>
+            <tr>
+                <th>Dato</th>
+                <th>Navn</th>
+                <th>Email</th>
+                <th>Telefon</th>
+                <th>Kategori</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (var s in _items.OrderByDescending(x => x.DatoTidspunkt))
+            {
+                <tr>
+                    <td>@s.DatoTidspunkt.ToLocalTime().ToString("yyyy-MM-dd HH:mm")</td>
+                    <td>@s.Navn</td>
+                    <td>@s.Email</td>
+                    <td>@s.Telefon</td>
+                    <td><span class="sl-chip">@s.Kategori</span></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+</div>
+
+@code {
+    private List<SupportMessage>? _items;
+    protected override async Task OnInitializedAsync() => _items = await SupportService.GetAllAsync();
+}

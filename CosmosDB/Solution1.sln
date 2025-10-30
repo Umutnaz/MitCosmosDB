@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CosmosWebApp", "CosmosWebApp\CosmosWebApp.csproj", "{2FE4427B-1908-4E41-BF52-D278F22470B6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{A2E26B66-D8DC-4351-BF9B-6CABBF674237}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2FE4427B-1908-4E41-BF52-D278F22470B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FE4427B-1908-4E41-BF52-D278F22470B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FE4427B-1908-4E41-BF52-D278F22470B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FE4427B-1908-4E41-BF52-D278F22470B6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A2E26B66-D8DC-4351-BF9B-6CABBF674237}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A2E26B66-D8DC-4351-BF9B-6CABBF674237}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A2E26B66-D8DC-4351-BF9B-6CABBF674237}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A2E26B66-D8DC-4351-BF9B-6CABBF674237}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
