@@ -13,7 +13,9 @@ Projektet skulle være lavet med CosmosDB Azure som database.
 - $ export DATABASE="IBasSupportDB"
 - $ az cosmosdb sql database create --account-name $DBACCOUNT \
 - --resource-group $RESGRP --name $DATABASE
----
+
+--
+
 ## 🔗Hvordan bruger du min app?
 - Program.cs ln 13
 - builder.Services.AddSingleton(sp => { var connectionString = "INDSÆT HER"; return new CosmosClient(connectionString); });
