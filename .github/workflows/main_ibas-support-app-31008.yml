@@ -1,0 +1,35 @@
+name: Build and Deploy .NET to Azure Web App
+
+on:
+  push:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore
+
+      - name: Publish
+        run: dotnet publish -c Release -o ${{ github.workspace }}/publish
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: ibas-support-app-31008
+          package: ${{ github.workspace }}/publish
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
